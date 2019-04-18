@@ -13,8 +13,7 @@ func (arr IndexArray) Len() int { return len(arr) }
 func (arr IndexArray) Less(i, j int) bool {
 	a := arr[i]
 	b := arr[j]
-	//val := int16(math.Abs(b.Value) - math.Abs(a.Value))
 
-	return math.Abs(b.Value)-math.Abs(a.Value) > 0
+	return math.Abs(b.Value) > math.Abs(a.Value)
 }
 func (arr IndexArray) Swap(i, j int) { arr[i], arr[j] = arr[j], arr[i] }

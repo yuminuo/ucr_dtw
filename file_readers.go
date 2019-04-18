@@ -2,6 +2,7 @@ package UcrDtw
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -25,6 +26,7 @@ func ReadQueryFromFile(pth string) []float64 {
 		for _, v := range strings.Split(row, " ") {
 			f, err := strconv.ParseFloat(v, 64)
 			if err != nil {
+
 				continue
 			}
 			query = append(query, f)
@@ -51,9 +53,17 @@ func ReadDataFromFile(pth string) Queue {
 
 	scanner := bufio.NewScanner(file)
 	dat, err := ioutil.ReadFile(pth)
-	for _, v := range strings.Split(string(dat), " ") {
+	splited := strings.Split(string(dat), " ")
+	for i, v := range splited {
+		if i == len(splited)-1 {
+			v = strings.Replace(v, "\r\n", "", -1)
+		}
 		f, err := strconv.ParseFloat(v, 64)
 		if err != nil {
+			if i == len(splited)-1 {
+				fmt.Print(v)
+			}
+			//
 			continue
 		}
 		queue.Enqueue(f)
