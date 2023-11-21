@@ -1,7 +1,6 @@
 package UcrDtw
 
 import (
-	"golang.org/x/exp/errors/fmt"
 	"math"
 	"sort"
 )
@@ -79,7 +78,7 @@ func PrepareQuery(queryArr []float64, queryLength int64, wrappingWindow float64)
 
 }
 
-func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int) ([]LocationDtw, int64, float64) {
+func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int, step int64) ([]LocationDtw, int64, float64) {
 	min_bsf = min_bsf * min_bsf
 	var d float64
 	var t []float64
@@ -218,9 +217,6 @@ func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int) ([]Locati
 								dist = dtw(tz, query.q, cb, query.m, query.r, bsf)
 
 								cur_loc := it*(int64(epoch)-query.m+1) + i - query.m + 1
-								if cur_loc == int64(756562) {
-									fmt.Printf("In location distance is %v\n", math.Sqrt(dist))
-								}
 
 								if dist < min_bsf {
 
@@ -232,7 +228,7 @@ func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int) ([]Locati
 									// Update bsf
 									// loc is the real starting location of the nearest neighbor in the file
 									bsf = dist
-									loc = it*(int64(epoch)-query.m+1) + i - query.m + 1
+									loc = cur_loc
 
 								}
 
@@ -273,7 +269,7 @@ func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int) ([]Locati
 	preLocation := results[0]
 	for ri := 1; ri < len(results); ri++ {
 		var curLoc = results[ri]
-		if curLoc.index > preLocation.index+20 {
+		if curLoc.index > preLocation.index+step {
 			selected = append(selected, preLocation)
 			preLocation = curLoc
 			continue

@@ -19,14 +19,14 @@ func TestFindSimilar(t *testing.T) {
 	data := ReadDataFromFile("./test_data/Data.txt")
 
 	query := PrepareQuery(query_data, len_, window)
-	_, loc, _ := FindSimilar(data, query, 3.87, epoch)
+	_, loc, _ := FindSimilar(data, query, 3.87, epoch, len_)
 
 	assert.Equal(t, int64(223370), loc)
 
 	query_data = ReadQueryFromFile("./test_data/Query.txt")
 
 	query = PrepareQuery(query_data, len_, window)
-	_, loc, _ = FindSimilar(data, query, 3.87, epoch)
+	_, loc, _ = FindSimilar(data, query, 3.87, epoch, len_)
 
 	assert.Equal(t, int64(756562), loc)
 
