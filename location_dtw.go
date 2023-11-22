@@ -1,6 +1,6 @@
 package UcrDtw
 
 type LocationDtw struct {
-	index int64
-	value float64
+	Index int64
+	Value float64
 }

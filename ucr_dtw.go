@@ -269,13 +269,13 @@ func FindSimilar(data Queue, query *Query, min_bsf float64, epoch int, step int6
 	preLocation := results[0]
 	for ri := 1; ri < len(results); ri++ {
 		var curLoc = results[ri]
-		if curLoc.index > preLocation.index+step {
+		if curLoc.Index > preLocation.Index+step {
 			selected = append(selected, preLocation)
 			preLocation = curLoc
 			continue
 		}
 
-		if curLoc.value < preLocation.value {
+		if curLoc.Value < preLocation.Value {
 			preLocation = curLoc
 		}
 	}
